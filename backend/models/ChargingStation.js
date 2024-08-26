@@ -15,6 +15,10 @@ const chargingStationSchema = new Schema({
         longitude: {
             type: Number,
             required: true
+        },
+        address: {
+            type: String,
+            required: true
         }
     },
     status: {

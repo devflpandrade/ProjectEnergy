@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './Login';
+import Register from './Register';
 
 function App() {
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/')
-            .then(response => setData(response.data))
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-    return (
-        <div>
-            <h1>Carregando dados da API...</h1>
-            {data && <p>{data}</p>}
-        </div>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

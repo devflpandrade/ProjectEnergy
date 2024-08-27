@@ -1,106 +1,147 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Register() {
+const Register = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [carBrand, setCarBrand] = useState('');
+  const [carModel, setCarModel] = useState('');
+  const [password, setPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    try {
+      const response = await axios.post('http://localhost:5000/register', {
+        firstName,
+        lastName,
+        email,
+        dateOfBirth,
+        cpf,
+        carBrand,
+        carModel,
+        password,
+      });
+
+      if (response.status === 201) {
+        setSuccessMessage('Usuário registrado com sucesso!');
+        // Limpar os campos do formulário após o registro bem-sucedido
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setDateOfBirth('');
+        setCpf('');
+        setCarBrand('');
+        setCarModel('');
+        setPassword('');
+      }
+    } catch (error) {
+      setErrorMessage('Erro ao registrar usuário. Tente novamente.');
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center">Cadastro</h2>
-        <form>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="mb-4">
-              <label htmlFor="firstName" className="block text-gray-700 mb-2">
-                Nome:
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite seu nome"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="lastName" className="block text-gray-700 mb-2">
-                Sobrenome:
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite seu sobrenome"
-                required
-              />
-            </div>
-          </div>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Cadastro de Novo Usuário</h1>
+        <form onSubmit={handleRegister}>
+          {/* Campos do formulário */}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 mb-2">
-              E-mail:
-            </label>
             <input
-              type="email"
-              id="email"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Digite seu e-mail"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="birthDate" className="block text-gray-700 mb-2">
-              Data de Nascimento:
-            </label>
-            <input
-              type="date"
-              id="birthDate"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="cpf" className="block text-gray-700 mb-2">
-              CPF:
-            </label>
-            <input
+              className="w-full p-2 border border-gray-300 rounded"
               type="text"
-              id="cpf"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Digite seu CPF"
+              placeholder="Nome"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               required
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="mb-4">
-              <label htmlFor="carBrand" className="block text-gray-700 mb-2">
-                Marca do carro:
-              </label>
-              <input
-                type="text"
-                id="carBrand"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite a marca do seu carro"
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="carModel" className="block text-gray-700 mb-2">
-                Modelo do carro:
-              </label>
-              <input
-                type="text"
-                id="carModel"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Digite o modelo do seu carro"
-              />
-            </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="text"
+              placeholder="Sobrenome"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
-          >
-            Cadastrar
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="date"
+              placeholder="Data de Nascimento"
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="text"
+              placeholder="Marca do Carro"
+              value={carBrand}
+              onChange={(e) => setCarBrand(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="text"
+              placeholder="Modelo do Carro"
+              value={carModel}
+              onChange={(e) => setCarModel(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              className="w-full p-2 border border-gray-300 rounded"
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button className="w-full bg-blue-500 text-white p-2 rounded" type="submit">
+            Registrar
           </button>
         </form>
+
+        {/* Exibir mensagens de sucesso ou erro */}
+        {successMessage && <p className="text-green-500 mt-4 text-center">{successMessage}</p>}
+        {errorMessage && <p className="text-red-500 mt-4 text-center">{errorMessage}</p>}
       </div>
     </div>
   );
-}
+};
 
 export default Register;

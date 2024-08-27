@@ -1,9 +1,8 @@
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -22,10 +21,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Modelo de Estação de Carregamento
 const ChargingStation = require('./models/ChargingStation');
 
+// Modelo de Usuário
+const User = require('./models/User');
+
+// Rota de verificação
 app.get('/', (req, res) => {
     res.send('API está funcionando!');
 });
 
+// Rotas para Estações de Carregamento
 
 // Rota para obter todas as estações de carregamento
 app.get('/stations', async (req, res) => {
@@ -72,6 +76,52 @@ app.delete('/stations/:id', async (req, res) => {
         res.json({ message: 'Estação de carregamento deletada com sucesso' });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar estação de carregamento' });
+    }
+});
+
+// ** criar mais rotas de Usuários abaixo **
+
+// Rota para obter todos os usuários
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find(); // Recupera todos os usuários
+        res.json(users);
+    } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        res.status(500).json({ error: 'Erro ao buscar usuários', details: error.message });
+    }
+});
+
+// Rota para registrar um novo usuário
+app.post('/register', async (req, res) => {
+    const { firstName, lastName, email, dateOfBirth, cpf, carBrand, carModel, password } = req.body;
+
+    try {
+        // Verifica se o email já está em uso
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Este e-mail já está em uso.' });
+        }
+
+        // Criptografa a senha antes de salvar
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({ 
+            firstName, 
+            lastName, 
+            email, 
+            dateOfBirth, 
+            cpf, 
+            carBrand, 
+            carModel, 
+            password: hashedPassword // Armazena a senha criptografada
+        });
+
+        await newUser.save();
+        res.status(201).json({ message: "Usuário registrado com sucesso!" });
+    } catch (error) {
+        console.error('Erro ao registrar usuário:', error);
+        res.status(400).json({ error: 'Erro ao registrar usuário', details: error.message });
     }
 });
 

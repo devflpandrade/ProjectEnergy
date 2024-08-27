@@ -44,7 +44,8 @@ app.post('/stations', async (req, res) => {
         const savedStation = await newStation.save();
         res.status(201).json(savedStation);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao adicionar estação de carregamento' });
+        console.error('Erro ao adicionar estação de carregamento:', error);
+        res.status(400).json({ error: 'Erro ao adicionar estação de carregamento', details: error.message });
     }
 });
 
@@ -57,7 +58,7 @@ app.put('/stations/:id', async (req, res) => {
         }
         res.json(updatedStation);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar estação de carregamento' });
+        res.status(400).json({ error: 'Erro ao atualizar estação de carregamento', details: error.message });
     }
 });
 

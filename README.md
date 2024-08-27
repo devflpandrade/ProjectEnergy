@@ -42,7 +42,6 @@
 - **Banco de Dados**: MongoDB (ou outra tecnologia conforme necessário)
 - **Testes**: Jest, React Testing Library, Supertest
 - **Deploy**: GitHub Actions, Docker, AWS/GCP/Azure (ou outro serviço de hospedagem)
-- **APIs**: Google Maps API, OpenChargeMap API
 
 ## Como Contribuir
 

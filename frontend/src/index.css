@@ -1,0 +1,14 @@
+/* src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados */
+.custom-bg {
+    background-color: #123456; /* Cor de fundo personalizada */
+}
+
+.custom-text {
+    color: #654321; /* Cor de texto personalizada */
+}

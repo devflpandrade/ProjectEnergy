@@ -5,7 +5,7 @@ const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [birthDate, setBirthDate] = useState(''); // Corrigido para 'birthDate'
   const [cpf, setCpf] = useState('');
   const [carBrand, setCarBrand] = useState('');
   const [carModel, setCarModel] = useState('');
@@ -23,7 +23,7 @@ const Register = () => {
         firstName,
         lastName,
         email,
-        dateOfBirth,
+        birthDate, // Corrigido para 'birthDate'
         cpf,
         carBrand,
         carModel,
@@ -36,7 +36,7 @@ const Register = () => {
         setFirstName('');
         setLastName('');
         setEmail('');
-        setDateOfBirth('');
+        setBirthDate(''); // Corrigido para 'birthDate'
         setCpf('');
         setCarBrand('');
         setCarModel('');
@@ -88,8 +88,8 @@ const Register = () => {
               className="w-full p-2 border border-gray-300 rounded"
               type="date"
               placeholder="Data de Nascimento"
-              value={dateOfBirth}
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
               required
             />
           </div>

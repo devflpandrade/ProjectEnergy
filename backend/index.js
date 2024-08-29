@@ -84,23 +84,30 @@ app.delete('/stations/:id', async (req, res) => {
 // Rota para obter todos os usuários
 app.get('/users', async (req, res) => {
     try {
-        const users = await User.find(); // Recupera todos os usuários
-        res.json(users);
+        const users = await User.find();
+        // Mapeia os usuários para ajustar o formato de birthDate
+        const formattedUsers = users.map(user => ({
+            ...user._doc,
+            birthDate: user.birthDate.toISOString().split('T')[0]
+        }));
+        res.json(formattedUsers);
     } catch (error) {
         console.error('Erro ao buscar usuários:', error);
         res.status(500).json({ error: 'Erro ao buscar usuários', details: error.message });
     }
 });
 
-// Rota para registrar um novo usuário
 app.post('/register', async (req, res) => {
-    const { firstName, lastName, email, dateOfBirth, cpf, carBrand, carModel, password } = req.body;
+    let { firstName, lastName, email, birthDate, cpf, carBrand, carModel, password } = req.body;
 
     try {
+        // Formata a data para YYYY-MM-DD
+        birthDate = new Date(birthDate).toISOString().split('T')[0];
+
         // Verifica se o email já está em uso
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ cpf });
         if (existingUser) {
-            return res.status(400).json({ error: 'Este e-mail já está em uso.' });
+            return res.status(400).json({ error: 'Este CPF já está em uso.' });
         }
 
         // Criptografa a senha antes de salvar
@@ -110,11 +117,11 @@ app.post('/register', async (req, res) => {
             firstName, 
             lastName, 
             email, 
-            dateOfBirth, 
+            birthDate, 
             cpf, 
             carBrand, 
             carModel, 
-            password: hashedPassword // Armazena a senha criptografada
+            password: hashedPassword
         });
 
         await newUser.save();

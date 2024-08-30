@@ -1,17 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// Atualize o caminho para os arquivos de imagem
-import AddUserIcon from '../img/add-user.png';
-import User from '../img/user.png';
 
-const LandingPage = () => {
-  // Defina um array de objetos para os itens do menu
-  const menuItems = [
-    { icon: <img src={User} alt="Login" className="w-8 h-8" />, text: 'Login', to: '/login' },
-    { icon: <img src={AddUserIcon} alt="Cadastro" className="w-8 h-8" />, text: 'Cadastro', to: '/register' },
-    { icon: '3', text: 'Configurações' },
-  ];
-
+const Layout = ({ children }) => {
   return (
     <div 
       className="flex flex-col min-h-screen"
@@ -21,17 +10,9 @@ const LandingPage = () => {
         backgroundPosition: 'center'
       }}
     >
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center relative">
-        {/* Main Content Area */}
-        <div className="bg-white bg-opacity-89 p-20 rounded shadow-2xl text-center mx-auto w-full max-w-md">
-          <h2 className="text-4xl font-semibold mb-2">Bem-vindo à Project Energy</h2>
-          <p className="mb-8">Aqui você encontra as melhores estações de carregamento para seu carro elétrico com facilidade e rapidez.</p>
-          <Link to="/register" className="bg-black text-white py-2 px-4 rounded hover:bg-blue-500 transition">Comece Agora</Link>
-        </div>
+      <main className="flex-1">
+        {children}
       </main>
-
-      {/* Footer */}
       <footer className="bg-gray-200 text-gray-700 p-4">
         <div className="container mx-auto text-center">
           <p>&copy; 2024 ProjectEnergy. Todos os direitos reservados.</p>
@@ -41,4 +22,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Layout;

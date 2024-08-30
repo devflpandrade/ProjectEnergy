@@ -27,7 +27,16 @@ const LandingPage = () => {
         <div className="bg-white bg-opacity-89 p-20 rounded shadow-2xl text-center mx-auto w-full max-w-md">
           <h2 className="text-4xl font-semibold mb-2">Bem-vindo à Project Energy</h2>
           <p className="mb-8">Aqui você encontra as melhores estações de carregamento para seu carro elétrico com facilidade e rapidez.</p>
-          <Link to="/register" className="bg-black text-white py-2 px-4 rounded hover:bg-blue-500 transition">Comece Agora</Link>
+          <div className="space-y-4">
+            
+            <Link to="/login" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition block">
+              Faça seu Login
+            </Link>
+            <p>ou</p>
+            <Link to="/register" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition block">
+              Crie seu Perfil
+            </Link>
+          </div>
         </div>
       </main>
 

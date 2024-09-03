@@ -1,5 +1,5 @@
 # Ignore node_modules
-node_modules/
+/node_modules
 
 # Ignore environment variables
 .env
@@ -10,3 +10,6 @@ node_modules/
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore General Files
+getStations.py

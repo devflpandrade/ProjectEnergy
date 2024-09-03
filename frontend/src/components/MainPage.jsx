@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import axios from 'axios';
+import Navbar from './NavBar';
+import Sidebar from './SideBar';
 
 // Corrigir ícone do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -42,29 +44,35 @@ const MainPage = () => {
   }
 
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
-      <MapContainer center={[-29.91070208644713, -51.18434709963495]} zoom={13} style={{ height: '100%', width: '100%' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {stations.map((station) => {
-          const { latitude, longitude } = station.location; // Acesso correto das coordenadas
-          if (latitude && longitude) {
-            return (
-              <Marker key={station._id} position={[latitude, longitude]}>
-                <Popup>
-                  <div>
-                    <h3>{station.name}</h3>
-                    <p>{station.location.address}</p>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          }
-          return null;
-        })}
-      </MapContainer>
+    <div className="flex">
+      <Sidebar /> {/* Adicione o Sidebar */}
+      <div className="flex-1 ml-64"> {/* Espaço suficiente para o Sidebar */}
+        <Navbar />
+        <div style={{ marginTop: '4rem', height: 'calc(100vh - 4rem)', width: '100%' }}>
+          <MapContainer center={[-29.91070208644713, -51.18434709963495]} zoom={13} style={{ height: '100%', width: '100%' }}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {stations.map((station) => {
+              const { latitude, longitude } = station.location;
+              if (latitude && longitude) {
+                return (
+                  <Marker key={station._id} position={[latitude, longitude]}>
+                    <Popup>
+                      <div>
+                        <h3>{station.name}</h3>
+                        <p>{station.location.address}</p>
+                      </div>
+                    </Popup>
+                  </Marker>
+                );
+              }
+              return null;
+            })}
+          </MapContainer>
+        </div>
+      </div>
     </div>
   );
 };

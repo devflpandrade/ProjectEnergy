@@ -35,13 +35,13 @@
    - Configurar o deploy do frontend e backend em um serviço de hospedagem adequado.
    - Integrar com GitHub Actions para CI/CD, garantindo a integração contínua e entrega contínua.
 
-## Tecnologias para utilização
+## Tecnologias Utilizadas
 
-- **Frontend**: React, TypeScript
+- **Frontend**: React
 - **Backend**: Node.js, Express
-- **Banco de Dados**: MongoDB (ou outra tecnologia conforme necessário)
-- **Testes**: Jest, React Testing Library, Supertest
-- **Deploy**: GitHub Actions, Docker, AWS/GCP/Azure (ou outro serviço de hospedagem)
+- **Banco de Dados**: MongoDB
+- **Testes**: TBD
+- **Deploy**: TBD
 
 ## Como Contribuir
 

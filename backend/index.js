@@ -97,6 +97,7 @@ app.get('/users', async (req, res) => {
     }
 });
 
+// Rota para registrar um novo usuário
 app.post('/register', async (req, res) => {
     let { firstName, lastName, email, birthDate, cpf, carBrand, carModel, password } = req.body;
 
@@ -129,6 +130,34 @@ app.post('/register', async (req, res) => {
     } catch (error) {
         console.error('Erro ao registrar usuário:', error);
         res.status(400).json({ error: 'Erro ao registrar usuário', details: error.message });
+    }
+});
+
+// Rota para autenticar o login do usuário
+app.post('/login', async (req, res) => {
+    const { cpf, password } = req.body;
+
+    try {
+        // Procura o usuário pelo CPF
+        const user = await User.findOne({ cpf });
+
+        if (!user) {
+            return res.status(401).json({ error: 'CPF já está em uso. Faça login ou recupere sua senha' });
+        }
+
+        // Compara a senha informada com a senha armazenada no banco de dados
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Senha inválida.' });
+        }
+
+        // Se as credenciais forem válidas, retornar sucesso
+        res.status(200).json({ message: 'Login realizado com sucesso!' });
+
+    } catch (error) {
+        console.error('Erro ao tentar fazer login:', error);
+        res.status(500).json({ error: 'Ocorreu um erro ao tentar fazer login' });
     }
 });
 

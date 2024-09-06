@@ -19,6 +19,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({ city: '', plugType: '' });
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Controla a visibilidade da barra lateral
 
   useEffect(() => {
     const fetchStations = async () => {
@@ -45,6 +46,10 @@ const MainPage = () => {
     setFilters(newFilters);
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen); // Alterna a visibilidade da barra lateral
+  };
+
   if (loading) {
     return <div>Carregando...</div>;
   }
@@ -54,23 +59,12 @@ const MainPage = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* Navbar fixa na parte superior */}
-      <Navbar />
-
-      <div className="flex flex-1" style={{ marginTop: '4rem' }}>
-        {/* Barra lateral ocupando a esquerda */}
-        <div className="flex-none w-64">
-          <Sidebar onSearch={handleSearch} />
-        </div>
-
-        {/* Mapa ocupando o restante da tela */}
-        <div className="flex-1">
-          <MapContainer
-            center={[-29.91070208644713, -51.18434709963495]}
-            zoom={13}
-            style={{ height: '100%', width: '100%' }}
-          >
+    <div>
+      <Navbar toggleSidebar={toggleSidebar} /> {/* Passa a função de alternar a sidebar */}
+      <div style={{ display: 'flex' }}>
+        {sidebarOpen && <Sidebar onSearch={handleSearch} />} {/* Exibe a sidebar apenas se estiver aberta */}
+        <div style={{ marginLeft: sidebarOpen ? '16rem' : '0', marginTop: '4rem', height: 'calc(100vh - 4rem)', width: sidebarOpen ? 'calc(100% - 16rem)' : '100%' }}>
+          <MapContainer center={[-29.91070208644713, -51.18434709963495]} zoom={13} style={{ height: '100%', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

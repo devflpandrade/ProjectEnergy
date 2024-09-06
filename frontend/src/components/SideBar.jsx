@@ -49,7 +49,7 @@ const Sidebar = ({ onSearch }) => {
           value={plugType}
           onChange={(e) => setPlugType(e.target.value)}
         >
-          <option value="">Selecione</option>
+          <option value="">Nenhum</option>
           {plugTypes.map((type, index) => (
             <option key={index} value={type}>
               {type}

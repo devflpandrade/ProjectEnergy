@@ -18,11 +18,17 @@ const MainPage = () => {
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [filters, setFilters] = useState({ city: '', plugType: '' });
 
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/stations');
+        const { city, plugType } = filters;
+        const queryParams = new URLSearchParams();
+        if (city) queryParams.append('city', city);
+        if (plugType) queryParams.append('plugType', plugType);
+
+        const response = await axios.get(`http://localhost:5000/stations?${queryParams.toString()}`);
         setStations(response.data);
       } catch (err) {
         console.error('Erro ao buscar estações:', err);
@@ -33,7 +39,11 @@ const MainPage = () => {
     };
 
     fetchStations();
-  }, []);
+  }, [filters]);
+
+  const handleSearch = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -44,11 +54,11 @@ const MainPage = () => {
   }
 
   return (
-    <div className="flex">
-      <Sidebar /> {/* Adicione o Sidebar */}
-      <div className="flex-1 ml-64"> {/* Espaço suficiente para o Sidebar */}
-        <Navbar />
-        <div style={{ marginTop: '4rem', height: 'calc(100vh - 4rem)', width: '100%' }}>
+    <div>
+      <Navbar />
+      <div style={{ display: 'flex' }}>
+        <Sidebar onSearch={handleSearch} />
+        <div style={{ marginLeft: '16rem', height: 'calc(100vh - 4rem)', width: 'calc(100% - 16rem)' }}>
           <MapContainer center={[-29.91070208644713, -51.18434709963495]} zoom={13} style={{ height: '100%', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

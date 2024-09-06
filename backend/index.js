@@ -34,7 +34,13 @@ app.get('/', (req, res) => {
 // Rota para obter todas as estações de carregamento
 app.get('/stations', async (req, res) => {
     try {
-        const stations = await ChargingStation.find();
+        const { city, plugType } = req.query;
+        const query = {};
+
+        if (city) query['location.city'] = city;
+        if (plugType) query['plugs.name'] = plugType; // Ajustado para filtrar pelo tipo de plug
+
+        const stations = await ChargingStation.find(query);
         res.json(stations);
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar estações de carregamento' });

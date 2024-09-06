@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Sidebar = ({ onSearch }) => {
   const [city, setCity] = useState('');
   const [plugType, setPlugType] = useState('');
+  const [plugTypes, setPlugTypes] = useState([]); // Estado para armazenar tipos de plug
+
+  useEffect(() => {
+    const fetchPlugTypes = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/plug-types');
+        setPlugTypes(response.data); // Preencher a lista de tipos de plug de forma dinamica
+      } catch (error) {
+        console.error('Erro ao buscar tipos de plugue:', error);
+      }
+    };
+
+    fetchPlugTypes();
+  }, []);
 
   const handleSearch = () => {
     onSearch({ city, plugType });
@@ -19,9 +34,9 @@ const Sidebar = ({ onSearch }) => {
           id="city"
           type="text"
           placeholder="Digite a cidade"
+          className="w-full p-2 rounded bg-gray-800 text-white"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full p-2 rounded bg-gray-800 text-white"
         />
       </div>
       <div className="mb-4">
@@ -30,18 +45,21 @@ const Sidebar = ({ onSearch }) => {
         </label>
         <select
           id="plugType"
+          className="w-full p-2 rounded bg-gray-800 text-white"
           value={plugType}
           onChange={(e) => setPlugType(e.target.value)}
-          className="w-full p-2 rounded bg-gray-800 text-white"
         >
           <option value="">Selecione</option>
-          <option value="Type 1">Type 1</option>
-          <option value="Type 2">Type 2</option>
+          {plugTypes.map((type, index) => (
+            <option key={index} value={type}>
+              {type}
+            </option>
+          ))}
         </select>
       </div>
       <button
+        className="bg-blue-500 text-white px-4 py-2 rounded"
         onClick={handleSearch}
-        className="bg-blue-500 text-white p-2 rounded"
       >
         Buscar
       </button>

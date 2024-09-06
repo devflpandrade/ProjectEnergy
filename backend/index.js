@@ -29,7 +29,9 @@ app.get('/', (req, res) => {
     res.send('API está funcionando!');
 });
 
-// Rotas para Estações de Carregamento
+//////////////////////////////////////////////////
+//******************* C R U D *********************
+//******************* ESTACOES ********************
 
 // Rota para obter todas as estações de carregamento
 app.get('/stations', async (req, res) => {
@@ -84,8 +86,9 @@ app.delete('/stations/:id', async (req, res) => {
         res.status(500).json({ error: 'Erro ao deletar estação de carregamento' });
     }
 });
-
-// ** criar mais rotas de Usuários abaixo **
+////////////////////////////////////////////
+//***************** C R U D *****************
+//***************** USUARIOS *****************
 
 // Rota para obter todos os usuários
 app.get('/users', async (req, res) => {
@@ -139,6 +142,9 @@ app.post('/register', async (req, res) => {
     }
 });
 
+/////////////////////// DEMAIS FUNÇÕES //////////////////////
+/////////////////////////////////////////////////////////////
+
 // Rota para autenticar o login do usuário
 app.post('/login', async (req, res) => {
     const { cpf, password } = req.body;
@@ -164,6 +170,17 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error('Erro ao tentar fazer login:', error);
         res.status(500).json({ error: 'Ocorreu um erro ao tentar fazer login' });
+    }
+});
+
+// Rota para buscar por tipo de plug
+app.get('/plug-types', async (req, res) => {
+    try {
+        const plugTypes = await ChargingStation.distinct('plugs.name');
+        res.json(plugTypes);
+    } catch (error) {
+        console.error('Error ao buscar tipos de plug:', error);
+        res.status(500).json({error: 'Erro ao buscar tipo de plug' });
     }
 });
 

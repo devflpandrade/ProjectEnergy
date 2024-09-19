@@ -2,7 +2,7 @@
 
 **ProjectEnergy** é uma iniciativa para desenvolver um site que facilita a localização de pontos de abastecimento elétrico veicular. O objetivo é ajudar proprietários de veículos elétricos a encontrar estações de carregamento de forma rápida e eficiente.
 
-## Estrutura do Projeto
+## Estrutura do Projeto & Metas
 
 1. **Configuração do Ambiente**
    - Configurar o ambiente de desenvolvimento local para o frontend e backend. ✔️
@@ -18,7 +18,7 @@
    - Desenvolver uma interface amigável para exibir os postos de carregamento próximos.
 
 4. **Desenvolvimento do Backend**
-   - Criar uma API RESTful com Node.js e Express. ✔️
+   - Criar API RESTful com Node.js e Express. ✔️
    - Conectar-se a um banco de dados para armazenar informações sobre os postos de carregamento. ✔️
    - Implementar endpoints para fornecer e manipular dados sobre as estações de carregamento. ✔️
 
@@ -32,9 +32,9 @@
 
 7. **Deploy**
    - Configurar o deploy do frontend e backend em um serviço de hospedagem adequado.
-   - Integrar com GitHub Actions para CI/CD, garantindo a integração contínua e entrega contínua.
+   - Integrar com GitHub Actions para CI/CD, garantindo a integração e entrega contínua.
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadas até o momento
 
 - **Frontend**: React
 - **Backend**: Node.js, Express
@@ -42,24 +42,6 @@
 - **Testes**: TBD
 - **Deploy**: TBD
 
-## Como Contribuir
-
-Contribuições são bem-vindas! Para contribuir com o **ProjectEnergy**, siga os passos abaixo:
-
-1. Faça um fork do repositório.
-2. Crie um novo branch para suas alterações (`git checkout -b feature/nova-funcionalidade`).
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`).
-4. Faça o push para o branch (`git push origin feature/nova-funcionalidade`).
-5. Abra um Pull Request.
-
 ## Licença
 
 Este projeto está licenciado sob a **Apache License 2.0** - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## Contato
-
-Se tiver alguma dúvida ou sugestão, entre em contato através do e-mail: devflp.andrade@gmail.com.
-
----
-
-Ajude-nos a construir um futuro mais sustentável facilitando o uso de veículos elétricos!
